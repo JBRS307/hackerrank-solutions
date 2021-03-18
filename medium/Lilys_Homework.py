@@ -1,20 +1,24 @@
-def countSwaps(arr, beauty, size):
+def countSwaps(arr, size):
+    m = {}
+    beauty = sorted(arr)
+    for i in range(size):
+        m[arr[i]] = i
+
     swaps = 0
     for i in range(size):
-        if arr[i] != beauty[i]:
-            for j in range(i+1, size):
-                if arr[j] == beauty[i]:
-                    arr[i], arr[j] = arr[j], arr[i]
-                    swaps += 1
-                    break
+        if beauty[i] != arr[i]:
+            swaps += 1
+        
+            toSwap = m[beauty[i]]  
+            m[arr[i]] = m[beauty[i]]
+            arr[i], arr[toSwap] = beauty[i], arr[i]
     return swaps
 
 #====================================================
 size = int(input())
 arr = list(map(int, input().rstrip().split()))
-beauty = sorted(arr)
 
-swaps1 = countSwaps(arr[:], beauty, size)
-swaps2 = countSwaps(arr, beauty[::-1], size)
+swapsAsc = countSwaps(arr[:], size)
+swapsDesc = countSwaps(arr[::-1], size)
 
-print(min(swaps1, swaps2))
+print(min(swapsAsc, swapsDesc))
