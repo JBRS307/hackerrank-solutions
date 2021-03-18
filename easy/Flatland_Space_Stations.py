@@ -1,36 +1,27 @@
-def findNearest(city, stations):
-    stations.append(city)
-    stations.sort()
-    index = stations.index(city)
-    if index-1 >= 0:
-        left = stations[index-1]
-    if index+1 < len(stations):
-        right = stations[index+1]
-    try:
-        distLeft = city - left
-    except:
-        distLeft = float('inf')
-    try:
-        distRight = right - city
-    except:
-        distRight = float('inf')
-    
-    return min(distLeft, distRight)
-
-
-def maxDistance(citiesQ, stations):
-    cities = [i for i in range(citiesQ)]
-    distances = set()
-    for city in cities:
-        if city in stations:
-            distances.add(0)
-        else:
-            distances.add(findNearest(city, stations[:]))
-    return max(distances)
-
+def calcDist(citiesQ, cities):
+    distances = [0]*citiesQ
+    for i in range(citiesQ):
+        if cities[i] != 1:
+            if i == 0:
+                distances[i] = 10**9
+            else:
+                distances[i] = distances[i-1]+1
+    return distances
+            
 
 #================================================================
 citiesQ, _ = list(map(int, input().rstrip().split()))
 stations = list(map(int, input().rstrip().split()))
-stations.sort()
-print(maxDistance(citiesQ, stations))
+cities = [0]*citiesQ
+for val in stations:
+    cities[val] = 1
+
+distLeft = calcDist(citiesQ, cities)
+distRight = calcDist(citiesQ, cities[::-1])
+distRight = distRight[::-1]
+
+dist = set()
+for i in range(citiesQ):
+    dist.add(min(distLeft[i], distRight[i]))
+
+print(max(dist))
