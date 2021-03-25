@@ -15,6 +15,8 @@ def findSort(arr, size):
     if i - left == 1:
         while arr[i] < arr[i-1]:
             i+=1
+            if i == size:
+                break
         right = i-1
         operation = 'reverse'
         if right - left == 1:
