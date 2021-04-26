@@ -50,5 +50,3 @@ moves += min(obBotRight[1]-column-1, row-obBotRight[0]-1)
 moves += min(row-obBotLeft[0]-1, column-obBotLeft[1]-1)
 
 print(moves)
-
-
